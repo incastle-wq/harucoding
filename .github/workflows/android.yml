@@ -23,6 +23,8 @@ jobs:
       - run: npm install --no-audit --no-fund
       - name: Stamp version
         run: sed -i "s/__VER__/1.${{ github.run_number }}/" www/app.js
+      - name: Lite APK (Python is downloaded on first run)
+        run: rm -rf www/pyodide
       - run: npx cap add android
       - run: npx capacitor-assets generate --android
       - name: Set app version

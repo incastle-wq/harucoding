@@ -1,8 +1,13 @@
 // Python 실행기: 화면이 멈추지 않도록 별도 작업 스레드에서 Pyodide를 돌린다.
-importScripts('pyodide/pyodide.js');
+// 앱(APK)에는 Python 실행기를 넣지 않고, 처음 실행할 때 인터넷에서 한 번 받아 둔다.
+const SOURCES = ['pyodide/', 'https://incastle-wq.github.io/harucoding/pyodide/', 'https://cdn.jsdelivr.net/pyodide/v0.27.7/full/'];
+let BASE = null;
+for (const src of SOURCES) {
+  try { importScripts(src + 'pyodide.js'); BASE = new URL(src, self.location.href).href; break; } catch (e) { /* 다음 주소 시도 */ }
+}
 let pyReady = null;
 function boot() {
-  if (!pyReady) pyReady = loadPyodide({ indexURL: new URL('pyodide/', self.location.href).href });
+  if (!pyReady) pyReady = BASE ? loadPyodide({ indexURL: BASE }) : Promise.reject(new Error('인터넷에 연결한 뒤 다시 실행해 주세요.'));
   return pyReady;
 }
 async function run({ id, code, stdin, warm }) {

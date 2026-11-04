@@ -19,6 +19,7 @@ const ICON={gear:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" str
 /* ---------- 데이터 ---------- */
 const CS=window.COURSES||[];const CM={},UM={},QM={},ALLQ=[];
 CS.forEach(c=>{CM[c.id]=c;c.units.forEach((u,ui)=>{u.c=c;u.ui=ui;u.lang=u.lang||c.lang;UM[u.id]=u;u.q.forEach((q,i)=>{q.id=u.id+':'+i;q.u=u;QM[q.id]=q;ALLQ.push(q)})})});
+const PYMSG=CAP?'파이썬 준비 중… 처음 한 번은 인터넷에서 약 10MB를 받아요':'파이썬 준비 중… (처음 한 번 몇 초 걸려요)';
 const MODE={python:'python',javascript:'javascript',html:'htmlmixed'};
 const LANGNAME={python:'Python',javascript:'JavaScript',html:'HTML'};
 
@@ -96,7 +97,7 @@ function mkWorker(file){const w=new Worker(file);w.onmessage=e=>{const cb=RUN.cb
 function call(w,msg){return new Promise(res=>{const id=++RUN.seq;RUN.cbs[id]=res;w.postMessage(Object.assign({id},msg))})}
 function warmPy(){if(!RUN.py)RUN.py=mkWorker('py-worker.js');if(!RUN.pyBoot)RUN.pyBoot=call(RUN.py,{warm:true}).then(r=>{if(!r.ok){RUN.pyBoot=null}return r});return RUN.pyBoot}
 function withTimeout(p,ms,onTO){let t;return Promise.race([p,new Promise(res=>{t=setTimeout(()=>{onTO();res({ok:false,out:'',err:'TIMEOUT'})},ms)})]).finally(()=>clearTimeout(t))}
-async function runPy(code,stdin){const w=await warmPy();if(w&&!w.ok)return {ok:false,out:'',err:'파이썬을 불러오지 못했어요. '+(w.err||'')};
+async function runPy(code,stdin){const w=await warmPy();if(w&&!w.ok)return {ok:false,out:'',err:'파이썬을 불러오지 못했어요. '+(CAP?'처음 한 번은 인터넷 연결이 필요해요. ':'')+(w.err||'')};
   return withTimeout(call(RUN.py,{code,stdin}),6000,()=>{try{RUN.py.terminate()}catch(e){}RUN.py=null;RUN.pyBoot=null;setTimeout(warmPy,300)})}
 async function runJs(code){if(!RUN.js)RUN.js=mkWorker('js-worker.js');return withTimeout(call(RUN.js,{code}),3000,()=>{try{RUN.js.terminate()}catch(e){}RUN.js=null})}
 function htmlDoc(code){const hook=`<script>(function(){var send=function(t,a){try{parent.postMessage({hc:1,t:t,m:[].map.call(a,function(x){return typeof x==='object'?JSON.stringify(x):String(x)}).join(' ')},'*')}catch(e){}};console.log=function(){send('log',arguments)};window.onerror=function(m){send('err',[m])};window.alert=function(m){send('log',['[알림] '+m])}})();<\/script><style>body{font-family:'Pretendard Variable',system-ui,sans-serif;margin:12px;color:#191F28;background:#fff}</style>`;
@@ -170,8 +171,8 @@ async function check(){if(L.state!=='ask'||!canCheck())return;const it=L.qs[L.i]
   finish(ok);}
 async function execFor(q,code){const lang=q.u.lang,out=$('#out');S.stat.runs++;sfx('run');
   if(lang==='html'){out.hidden=false;out.dataset.fresh='1';out.innerHTML='<span class="lab">콘솔</span><span style="color:var(--code-muted)">(console.log 출력이 여기에 나와요)</span>';await renderHtml($('#pv'),code);return {ok:true}}
-  out.classList.add('busy');out.innerHTML=lang==='python'&&!RUN.pyBoot?'파이썬 준비 중… (처음 한 번 몇 초 걸려요)':'실행 중…';
-  if(lang==='python'&&RUN.pyBoot){const ready=await Promise.race([RUN.pyBoot.then(()=>1),new Promise(r=>setTimeout(()=>r(0),120))]);if(!ready)out.innerHTML='파이썬 준비 중… (처음 한 번 몇 초 걸려요)';}
+  out.classList.add('busy');out.innerHTML=lang==='python'&&!RUN.pyBoot?PYMSG:'실행 중…';
+  if(lang==='python'&&RUN.pyBoot){const ready=await Promise.race([RUN.pyBoot.then(()=>1),new Promise(r=>setTimeout(()=>r(0),120))]);if(!ready)out.innerHTML=PYMSG;}
   const r=lang==='python'?await runPy(code,q.stdin||[]):await runJs(code);out.classList.remove('busy');out.innerHTML=consoleHtml(r,lang);return r}
 async function gradeCode(q,code){if(!code.trim())return {ok:false,why:'코드를 먼저 써 주세요'};
   const r=await execFor(q,code);
@@ -303,7 +304,7 @@ function renderPlay(){const lang=P.lang;const ex=CS.flatMap(c=>c.units.filter(u=
   ${lang==='python'?`<textarea class="stdin" id="pIn" placeholder="입력값 (input()에 한 줄씩 차례로 들어가요)" rows="2">${esc(S.ui.stdin_python||'')}</textarea>`:''}
   <div class="run-row"><button class="btn primary" id="pRun">${ICON.play}실행</button><button class="btn" id="pClear">지우기</button><button class="btn" id="pReset">처음 예제로</button></div>
   ${lang==='html'?`<iframe class="preview" id="pv" sandbox="allow-scripts allow-same-origin allow-modals" title="미리보기" style="height:320px"></iframe>`:''}
-  <div class="console" id="out" ${lang==='html'?'data-html':''}><span class="lab">${lang==='html'?'콘솔':'실행 결과'}</span><span style="color:var(--code-muted)">${lang==='python'?'처음 실행할 때 파이썬을 준비하느라 몇 초 걸려요.':'실행을 누르면 결과가 나와요.'}</span></div>`;
+  <div class="console" id="out" ${lang==='html'?'data-html':''}><span class="lab">${lang==='html'?'콘솔':'실행 결과'}</span><span style="color:var(--code-muted)">${lang==='python'?(CAP?'처음 실행할 때 인터넷에서 파이썬(약 10MB)을 한 번 받아요.':'처음 실행할 때 파이썬을 준비하느라 몇 초 걸려요.'):'실행을 누르면 결과가 나와요.'}</span></div>`;
   P.cm=makeEditor($('#pEd'),lang,S.code[lang]!=null?S.code[lang]:STARTER[lang]);
   P.cm.on('change',()=>{S.code[lang]=P.cm.getValue();clearTimeout(P.t);P.t=setTimeout(save,500)});
   if(lang==='html')renderHtml($('#pv'),P.cm.getValue());if(lang==='python')warmPy();

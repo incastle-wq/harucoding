@@ -418,6 +418,8 @@ PY += PYX
 HT += HTX
 JS += JSX
 
+exec(open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'expl.py'), encoding='utf-8').read())
+
 COURSES = [
  dict(id='py', name='Python', lang='python', g='py', d='입문자에게 가장 쉬운 언어. 데이터·자동화·AI까지', units=PY),
  dict(id='ht', name='HTML·CSS', lang='html', g='ht', d='웹페이지의 뼈대와 옷. 결과가 바로 눈에 보여요', units=HT),
@@ -426,6 +428,11 @@ COURSES = [
  dict(id='ap', name='앱개발', lang='javascript', g='ap', d='앱의 구조, API, 직접 만드는 작은 앱, Git과 출시까지', units=APP),
 ]
 
+for _c in COURSES:
+    for _u in _c['units']:
+        for _i, _q in enumerate(_u['q']):
+            if not (_q.get('e') or '').strip() and EXPL.get(f"{_u['id']}:{_i}"):
+                _q['e'] = EXPL[f"{_u['id']}:{_i}"]
 here = os.path.dirname(os.path.abspath(__file__))
 dst = os.path.join(here, '..', 'www', 'course.js')
 n = sum(len(u['q']) for c in COURSES for u in c['units'])

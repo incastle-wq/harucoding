@@ -169,7 +169,7 @@ async function check(){if(L.state!=='ask'||!canCheck())return;const it=L.qs[L.i]
   else if(q.k==='order'){ok=L.built.map(i=>q.lines[it.ord[i]]).join('\n')===q.lines.join('\n');}
   else if(q.k==='bug'){ok=L.sel===q.a;qv.querySelectorAll('#bugCode .ln').forEach((r,i)=>{r.classList.remove('sel');if(i===q.a)r.classList.add('right');else if(i===L.sel)r.classList.add('wrong')});if(ok)S.stat.bugs++;}
   else if(q.k==='code'){const b=$('#checkBtn');if(b){b.disabled=true;b.textContent='채점 중…'}const r=await gradeCode(q,L.cm.getValue());if(!L||L.qs[L.i]!==it)return;
-    if(!r.ok){L.tries++;sfx('ng');showCodeFail(r);renderFootAsk();return}ok=true;}
+    if(!r.ok){L.tries++;sfx('ng');showCodeFail(r,L.tries>=1?q.e:'');renderFootAsk();return}ok=true;}
   finish(ok);}
 async function execFor(q,code){const lang=q.u.lang,out=$('#out');S.stat.runs++;sfx('run');
   if(lang==='html'){out.hidden=false;out.dataset.fresh='1';out.innerHTML='<span class="lab">콘솔</span><span style="color:var(--code-muted)">(console.log 출력이 여기에 나와요)</span>';await renderHtml($('#pv'),code);return {ok:true}}
@@ -186,8 +186,8 @@ async function gradeCode(q,code){if(!code.trim())return {ok:false,why:'코드를
   if(q.contains&&!q.contains.every(c=>got.includes(c)))return {ok:false,why:`출력에 "${q.contains.join('", "')}" 이(가) 있어야 해요`};
   if(q.test){const t=q.u.lang==='python'?await runPy(code+'\n'+q.test,[]):await runJs(code+'\n'+q.test);if(!t.ok||norm(t.out).split('\n').pop()!==norm(q.testOut))return {ok:false,why:q.testWhy||'다른 입력으로도 시험해 봤는데 결과가 맞지 않아요. 특정 값만 맞추지 말고 모든 입력에 맞게 만들어 보세요'}}
   return {ok:true}}
-function showCodeFail(r){lFoot.className='l-foot ng';footIn.innerHTML='';const box=document.createElement('div');box.className='fb-scroll';
-  box.innerHTML=`<div class="fb">${mascot('oops',46)}<div class="body"><h3>${esc(r.why)}</h3>${r.want!=null?`<span class="hint">원하는 출력</span><pre class="console" style="margin:2px 0 4px">${esc(r.want)}</pre><span class="hint">내 출력</span><pre class="console" style="margin:2px 0">${esc(r.got||'(출력 없음)')}</pre>`:''}<span class="hint">고쳐서 다시 제출해 보세요.</span></div></div>`;
+function showCodeFail(r,hint){lFoot.className='l-foot ng';footIn.innerHTML='';const box=document.createElement('div');box.className='fb-scroll';
+  box.innerHTML=`<div class="fb">${mascot('oops',46)}<div class="body"><h3>${esc(r.why)}</h3>${r.want!=null?`<span class="hint">원하는 출력</span><pre class="console" style="margin:2px 0 4px">${esc(r.want)}</pre><span class="hint">내 출력</span><pre class="console" style="margin:2px 0">${esc(r.got||'(출력 없음)')}</pre>`:''}${hint?`<span class="nt">힌트: ${esc(hint)}</span>`:''}<span class="hint">고쳐서 다시 제출해 보세요.</span></div></div>`;
   footIn.appendChild(box);}
 function finish(ok){const it=L.qs[L.i],q=it.q;L.state='done';L.tot++;
   if(ok){L.ok++;L.combo++;L.xp+=it.retry?5:(q.k==='code'?15:10);L.best=Math.max(L.best,L.combo);sfx([5,10,15,20].includes(L.combo)?'combo':'ok');if(L.combo>=3){const cb=$('#combo');cb.classList.remove('pop');void cb.offsetWidth;cb.classList.add('pop');}}else{L.combo=0;sfx('ng');}

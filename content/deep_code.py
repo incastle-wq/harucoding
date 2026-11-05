@@ -29,7 +29,7 @@ PYX = [
   out('class A:\n    def hi(self):\n        print("A")\nclass B(A):\n    def hi(self):\n        print("B")\nB().hi()', ['B', 'A', 'A\nB', '에러'], '자식 클래스에서 다시 정의한 메서드가 쓰여요.'),
   fill('메서드의 첫 번째 매개변수를 채우세요', 'class Cat:\n    def meow(▢):\n        print("야옹")', ['self', 'this', 'cat', 'me']),
   bug('class Car:\n    def __init__(self, color):\n        color = color\ncar = Car("red")\nprint(car.color)', 2, 'self.color = color 로 써야 객체에 저장돼요.'),
-  task('name 속성을 가진 클래스 Hero를 만들고 Hero("하나")의 name을 출력하세요', 'class Hero:\n    def __init__(self, name):\n        self.name = name\n\nh = Hero("하나")\nprint(h.name)', '', expect='하나', need=[r'class\s+Hero', '__init__']),
+  task('name 속성을 가진 클래스 Hero를 만들고 Hero("하나")의 name을 출력하세요', 'class Hero:\n    def __init__(self, name):\n        self.name = name\n\nh = Hero("하나")\nprint(h.name)', '', expect='하나', need=[r'class\s+Hero', '__init__'], test='print(Hero("둘").name)', testOut='둘'),
  ]),
  dict(id='py11', t='예외 처리', ic='try', d='에러가 나도 프로그램이 멈추지 않게', cards=[
   card('에러의 종류', '숫자를 0으로 나누면 <code>ZeroDivisionError</code>, 숫자가 아닌 글자를 int로 바꾸면 <code>ValueError</code>, 없는 키를 꺼내면 <code>KeyError</code>가 나요. 에러 메시지 마지막 줄의 이름을 읽는 습관이 디버깅의 시작이에요.'),
@@ -101,7 +101,7 @@ JSX = [
  ]),
  dict(id='js11', t='JSON·저장·서버 통신', ic='fetch', d='JSON, localStorage, fetch와 async/await', cards=[
   card('JSON: 데이터를 주고받는 글자 형식', '<b>JSON</b>은 객체·배열을 문자열로 표현하는 형식이에요. 서버와 앱이 데이터를 주고받을 때 거의 항상 써요. <code>JSON.stringify(객체)</code>로 문자열로, <code>JSON.parse(문자열)</code>로 다시 객체로 바꿔요. 키는 반드시 큰따옴표로 감싸요.', 'const user = { name: "민수", tags: ["코딩", "게임"] };\nconst text = JSON.stringify(user);\nconsole.log(text);\nconst back = JSON.parse(text);\nconsole.log(back.tags[0]);'),
-  card('localStorage: 브라우저에 저장', '<code>localStorage.setItem(키, 문자열)</code>로 저장하면 페이지를 닫아도 남아요. 객체는 JSON으로 바꿔 저장해요. 이 학습 앱의 진도도 이런 방식으로 저장돼요. 단, 같은 기기·브라우저에만 있고 <b>비밀번호 같은 민감 정보는 저장하면 안 돼요</b>.', 'const data = { level: 3, xp: 120 };\nlocalStorage.setItem("save", JSON.stringify(data));\nconst loaded = JSON.parse(localStorage.getItem("save"));\nconsole.log("레벨", loaded.level);'),
+  card('localStorage: 브라우저에 저장', '<code>localStorage.setItem(키, 문자열)</code>로 저장하면 페이지를 닫아도 남아요. 객체는 JSON으로 바꿔 저장해요. 이 학습 앱의 진도도 이런 방식으로 저장돼요. (여기 실행기는 실제 저장소 대신 실행할 때마다 비워지는 연습용 저장소를 써요.) 단, 같은 기기·브라우저에만 있고 <b>비밀번호 같은 민감 정보는 저장하면 안 돼요</b>.', 'const data = { level: 3, xp: 120 };\nlocalStorage.setItem("save", JSON.stringify(data));\nconst loaded = JSON.parse(localStorage.getItem("save"));\nconsole.log("레벨", loaded.level);'),
   card('비동기: 기다리는 동안 멈추지 않기', '서버 응답처럼 시간이 걸리는 일은 <b>비동기</b>로 처리해요. <code>Promise</code>는 "나중에 결과를 주겠다는 약속"이고, <code>async</code> 함수 안에서 <code>await</code>로 결과를 기다려요. 기다리는 동안 화면은 멈추지 않아요.', 'function wait(ms) {\n  return new Promise(ok => setTimeout(ok, ms));\n}\nasync function run() {\n  console.log("시작");\n  await wait(500);\n  console.log("0.5초 뒤");\n}\nrun();\nconsole.log("run을 부른 다음 줄");'),
   card('fetch로 서버에서 데이터 받기', '<code>fetch(주소)</code>로 서버에 요청하고, 응답을 <code>.json()</code>으로 객체로 바꿔요. 네트워크는 실패할 수 있으니 <code>try/catch</code>로 감싸고 <code>res.ok</code>를 확인해요. 앱이 서버의 <b>API</b>와 대화하는 기본 방법이에요.', '// 실제 서버 대신 가짜 응답으로 흐름만 보여 줘요\nasync function getWeather() {\n  try {\n    const res = { ok: true, json: async () => ({ city: "서울", temp: 21 }) };\n    // 실제로는: const res = await fetch("https://api.example.com/weather");\n    if (!res.ok) throw new Error("응답 실패");\n    const data = await res.json();\n    console.log(data.city, data.temp + "도");\n  } catch (err) {\n    console.log("에러:", err.message);\n  }\n}\ngetWeather();'),
  ], q=[

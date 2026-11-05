@@ -184,6 +184,7 @@ async function gradeCode(q,code){if(!code.trim())return {ok:false,why:'코드를
   const got=norm(r.out);
   if(q.expect!=null&&got!==norm(q.expect))return {ok:false,why:'출력이 달라요',want:q.expect,got};
   if(q.contains&&!q.contains.every(c=>got.includes(c)))return {ok:false,why:`출력에 "${q.contains.join('", "')}" 이(가) 있어야 해요`};
+  if(q.test){const t=q.u.lang==='python'?await runPy(code+'\n'+q.test,[]):await runJs(code+'\n'+q.test);if(!t.ok||norm(t.out).split('\n').pop()!==norm(q.testOut))return {ok:false,why:q.testWhy||'다른 입력으로도 시험해 봤는데 결과가 맞지 않아요. 특정 값만 맞추지 말고 모든 입력에 맞게 만들어 보세요'}}
   return {ok:true}}
 function showCodeFail(r){lFoot.className='l-foot ng';footIn.innerHTML='';const box=document.createElement('div');box.className='fb-scroll';
   box.innerHTML=`<div class="fb">${mascot('oops',46)}<div class="body"><h3>${esc(r.why)}</h3>${r.want!=null?`<span class="hint">원하는 출력</span><pre class="console" style="margin:2px 0 4px">${esc(r.want)}</pre><span class="hint">내 출력</span><pre class="console" style="margin:2px 0">${esc(r.got||'(출력 없음)')}</pre>`:''}<span class="hint">고쳐서 다시 제출해 보세요.</span></div></div>`;

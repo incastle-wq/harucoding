@@ -48,7 +48,7 @@ PY = [
  dict(id='py2', t='변수', ic='x =', d='값에 이름을 붙여 저장하기', cards=[
   card('변수는 이름표 붙은 상자', '<code>이름 = 값</code>으로 값을 저장해요. 여기서 <code>=</code>는 "같다"가 아니라 <b>"오른쪽 값을 왼쪽 이름에 넣어라"</b>는 뜻이에요.', 'name = "민수"\nage = 25\nprint(name, age)'),
   card('값 바꾸기', '같은 이름에 다시 넣으면 이전 값은 사라지고 새 값만 남아요.', 'score = 10\nscore = 20\nprint(score)'),
-  card('이름 짓는 규칙', '영문자·숫자·밑줄(_)만 쓰고, 숫자로 시작할 수 없어요. 띄어쓰기 대신 <code>my_name</code>처럼 밑줄을 써요. 대문자와 소문자는 다른 글자로 취급해요.', 'my_name = "지영"\nprint(my_name)'),
+  card('이름 짓는 규칙', '글자·숫자·밑줄(_)로 만들고, 숫자로 시작할 수 없어요. 파이썬은 <code>나이 = 20</code>처럼 한글 이름도 허용하지만, 다른 사람과 함께 쓰는 코드에서는 <b>영문 이름을 쓰는 게 관례</b>예요. 띄어쓰기 대신 <code>my_name</code>처럼 밑줄을 써요. 대문자와 소문자는 다른 글자로 취급해요.', 'my_name = "지영"\nprint(my_name)'),
  ], q=[
   out('x = 5\nprint(x)', ['5', 'x', '"5"', '에러']),
   out('x = 5\nx = 8\nprint(x)', ['8', '5', '13', '5 8'], '마지막에 넣은 값 8만 남아요.'),
@@ -160,8 +160,8 @@ PY = [
   bug('def say(msg)\n    print(msg)\nsay("hi")', 0, 'def 줄 끝에 콜론(:)이 필요해요.'),
   mc('함수 안에서 return 아래에 있는 코드는?', ['실행되지 않는다', '두 번 실행된다', '에러가 난다', '먼저 실행된다'], 'return을 만나면 함수가 바로 끝나요.'),
   order('함수를 만들고 부르세요', ['def cheer(name):', '    print(name + " 화이팅!")', 'cheer("민수")']),
-  task('숫자를 받아 제곱을 돌려주는 함수 square를 만들고 print(square(6))을 실행하세요', 'def square(n):\n    return n * n\n\nprint(square(6))', '', expect='36', need=[r'def\s+square', 'return']),
-  task('이름을 받아 이름님 환영해요를 출력하는 함수 welcome을 만들고 welcome("하나")를 실행하세요', 'def welcome(name):\n    print(f"{name}님 환영해요")\n\nwelcome("하나")', '', expect='하나님 환영해요', need=[r'def\s+welcome']),
+  task('숫자를 받아 제곱을 돌려주는 함수 square를 만들고 print(square(6))을 실행하세요', 'def square(n):\n    return n * n\n\nprint(square(6))', '', expect='36', need=[r'def\s+square', 'return'], test='print(square(-3), square(0), square(12))', testOut='9 0 144'),
+  task('이름을 받아 이름님 환영해요를 출력하는 함수 welcome을 만들고 welcome("하나")를 실행하세요', 'def welcome(name):\n    print(f"{name}님 환영해요")\n\nwelcome("하나")', '', expect='하나님 환영해요', need=[r'def\s+welcome'], test='welcome("둘")', testOut='둘님 환영해요'),
  ]),
 ]
 
@@ -392,8 +392,8 @@ JS = [
   fill('절반을 돌려주세요', 'function half(n) {\n  ▢ n / 2;\n}', ['return', 'print', 'give', '=>']),
   bug('function hello() {\n  console.log("안녕");\n}\nhello;', 3, '함수를 실행하려면 hello()처럼 괄호를 붙여야 해요.'),
   order('함수를 만들고 부르세요', ['function cheer(name) {', '  console.log(name + " 화이팅!");', '}', 'cheer("민수");']),
-  task('두 수를 곱해 돌려주는 함수 mul을 만들고 console.log(mul(6, 7))을 실행하세요', 'function mul(a, b) {\n  return a * b;\n}\nconsole.log(mul(6, 7));', '', expect='42', need=['mul']),
-  task('화살표 함수 greet를 만들어 greet("민수")로 안녕, 민수를 출력하세요', 'const greet = (name) => console.log(`안녕, ${name}`);\ngreet("민수");', '', expect='안녕, 민수', need=['=>']),
+  task('두 수를 곱해 돌려주는 함수 mul을 만들고 console.log(mul(6, 7))을 실행하세요', 'function mul(a, b) {\n  return a * b;\n}\nconsole.log(mul(6, 7));', '', expect='42', need=['mul'], test='console.log(mul(-2, 5), mul(0, 9))', testOut='-10 0'),
+  task('화살표 함수 greet를 만들어 greet("민수")로 안녕, 민수를 출력하세요', 'const greet = (name) => console.log(`안녕, ${name}`);\ngreet("민수");', '', expect='안녕, 민수', need=['=>'], test='greet("지영")', testOut='안녕, 지영'),
  ]),
  dict(id='js8', t='웹페이지 움직이기', ic='DOM', d='버튼을 누르면 바뀌는 페이지', lang='html', cards=[
   card('요소 고르기', '<code>document.querySelector("선택자")</code>로 HTML 요소를 고르고, <code>textContent</code>로 글자를 바꿔요. 선택자는 CSS와 똑같이 써요.', '<h1 id="title">원래 제목</h1>\n<script>\n  const t = document.querySelector("#title");\n  t.textContent = "자바스크립트가 바꾼 제목";\n</script>'),

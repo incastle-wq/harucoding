@@ -417,6 +417,9 @@ exec(open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'deep_code.py
 PY += PYX
 HT += HTX
 JS += JSX
+_J={u['id']:u for u in JS}
+JS=[_J[k] for k in ['js1','js2','js3','js4','js5','js6','js7','js9','js8','js10','js11','js12']]
+_J['js8']['pre']='객체(Object)'
 
 exec(open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'expl.py'), encoding='utf-8').read())
 

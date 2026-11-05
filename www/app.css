@@ -139,3 +139,4 @@ code{font-family:var(--mono);font-size:.88em;background:var(--sunk);padding:1px 
 .intro.term .intro-sub{color:#CBD5E1}
 @media (prefers-reduced-motion:reduce){.node.next .bub,.node .start-tip,.term-line .cur{animation:none}}
 @media (max-width:380px){.courses{grid-template-columns:1fr}.course{flex-direction:row;align-items:center}.course .meter{display:none}}
+.pre{font-size:.8rem;color:var(--muted);margin-top:4px}

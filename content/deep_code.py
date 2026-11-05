@@ -15,7 +15,7 @@ PYX = [
   bug('menu = {"라면": 3000}\nprint(menu["김밥"])', 1, '없는 키를 [ ]로 꺼내면 KeyError가 나요. menu.get("김밥")을 쓰면 안전해요.'),
   task('딕셔너리 book = {"title": "어린왕자", "page": 120} 을 만들고 title 값을 출력하세요', 'book = {"title": "어린왕자", "page": 120}\nprint(book["title"])', '', expect='어린왕자', need=[r'\{']),
  ]),
- dict(id='py10', t='클래스와 객체', ic='class', d='설계도(클래스)로 물건(객체) 만들기', cards=[
+ dict(id='py10', pre='함수, 딕셔너리', t='클래스와 객체', ic='class', d='설계도(클래스)로 물건(객체) 만들기', cards=[
   card('객체란?', '<b>객체(object)</b>는 "데이터(속성)와 그 데이터로 하는 행동(메서드)"을 하나로 묶은 거예요. 강아지 객체라면 이름·나이(속성)와 짖기(메서드)를 함께 가져요. 사실 파이썬의 문자열·리스트도 모두 객체라서 <code>"hi".upper()</code>처럼 점(.)으로 메서드를 불렀던 거예요.', 'word = "hello"\nprint(word.upper())   # 문자열 객체의 메서드\nnums = [3, 1, 2]\nnums.sort()           # 리스트 객체의 메서드\nprint(nums)'),
   card('클래스는 설계도', '<b>클래스</b>는 객체를 찍어 내는 설계도(붕어빵 틀)이고, 그 틀로 만든 하나하나가 <b>인스턴스</b>(객체)예요. <code>__init__</code>은 객체가 만들어질 때 자동으로 실행돼 처음 값을 넣어 줘요. <code>self</code>는 "지금 만들어지는 바로 그 객체"를 가리켜요.', 'class Dog:\n    def __init__(self, name, age):\n        self.name = name\n        self.age = age\n\na = Dog("초코", 3)\nb = Dog("콩이", 1)\nprint(a.name, a.age)\nprint(b.name, b.age)'),
   card('메서드: 객체의 행동', '클래스 안의 함수를 <b>메서드</b>라고 해요. 첫 번째 매개변수는 항상 <code>self</code>이고, 이걸로 자기 속성을 읽고 바꿔요.', 'class Account:\n    def __init__(self, owner):\n        self.owner = owner\n        self.money = 0\n    def deposit(self, amount):\n        self.money += amount\n        print(self.owner, "잔액:", self.money)\n\nacc = Account("민수")\nacc.deposit(1000)\nacc.deposit(500)'),
@@ -31,7 +31,7 @@ PYX = [
   bug('class Car:\n    def __init__(self, color):\n        color = color\ncar = Car("red")\nprint(car.color)', 2, 'self.color = color 로 써야 객체에 저장돼요.'),
   task('name 속성을 가진 클래스 Hero를 만들고 Hero("하나")의 name을 출력하세요', 'class Hero:\n    def __init__(self, name):\n        self.name = name\n\nh = Hero("하나")\nprint(h.name)', '', expect='하나', need=[r'class\s+Hero', '__init__'], test='print(Hero("둘").name)', testOut='둘'),
  ]),
- dict(id='py11', t='예외 처리', ic='try', d='에러가 나도 프로그램이 멈추지 않게', cards=[
+ dict(id='py11', pre='조건문 if, 함수', t='예외 처리', ic='try', d='에러가 나도 프로그램이 멈추지 않게', cards=[
   card('에러의 종류', '숫자를 0으로 나누면 <code>ZeroDivisionError</code>, 숫자가 아닌 글자를 int로 바꾸면 <code>ValueError</code>, 없는 키를 꺼내면 <code>KeyError</code>가 나요. 에러 메시지 마지막 줄의 이름을 읽는 습관이 디버깅의 시작이에요.'),
   card('try와 except', '에러가 날 수 있는 코드를 <code>try</code>에 넣고, 에러가 나면 <code>except</code>에서 처리해요. 프로그램이 멈추지 않고 다음 줄로 계속 가요.', 'try:\n    n = int("열")\n    print(n)\nexcept ValueError:\n    print("숫자로 바꿀 수 없어요")\nprint("프로그램은 계속돼요")'),
   card('else와 finally', '<code>else</code>는 에러가 없을 때만, <code>finally</code>는 에러가 있든 없든 마지막에 항상 실행돼요. 파일 닫기, 연결 끊기 같은 정리 작업을 finally에 둬요.', 'for x in [2, 0]:\n    try:\n        r = 10 / x\n    except ZeroDivisionError:\n        print("0으로 나눌 수 없어요")\n    else:\n        print("결과", r)\n    finally:\n        print("---")'),
@@ -48,7 +48,7 @@ PYX = [
 ]
 
 HTX = [
- dict(id='ht8', t='폼과 입력 요소', ic='<form>', d='입력창, 셀렉트박스, 체크박스, 라디오, 버튼', cards=[
+ dict(id='ht8', pre='HTML과 태그, 클래스와 배치', t='폼과 입력 요소', ic='<form>', d='입력창, 셀렉트박스, 체크박스, 라디오, 버튼', cards=[
   card('폼은 입력을 모으는 상자', '<code>&lt;form&gt;</code> 안에 입력 요소를 넣어요. 각 입력에는 <code>&lt;label&gt;</code>을 붙여야 화면 낭독기 사용자도 무엇을 입력하는지 알 수 있고, 라벨을 눌러도 입력칸이 선택돼요. <code>for</code>와 입력의 <code>id</code>를 같게 맞춰요.', '<form>\n  <label for="nm">이름</label>\n  <input id="nm" type="text" placeholder="홍길동">\n  <label for="em">이메일</label>\n  <input id="em" type="email">\n  <button>보내기</button>\n</form>'),
   card('input의 type', '<code>type</code> 하나로 모양과 키보드가 바뀌어요. <code>text</code>(글자), <code>password</code>(가려짐), <code>number</code>(숫자), <code>email</code>(이메일 형식 검사), <code>date</code>(달력), <code>range</code>(슬라이더), <code>color</code>(색 선택). 모바일에서는 type에 맞는 키보드가 떠요.', '<input type="password" placeholder="비밀번호"><br>\n<input type="number" min="1" max="10" value="3"><br>\n<input type="date"><br>\n<input type="range" min="0" max="100"><br>\n<input type="color" value="#ff6600">'),
   card('셀렉트박스(select)', '여러 선택지 중 하나를 고르는 드롭다운이에요. <code>&lt;select&gt;</code> 안에 <code>&lt;option&gt;</code>을 넣어요. 화면에 보이는 글자와 실제로 전송되는 <code>value</code>는 다를 수 있어요. <code>selected</code>는 처음 선택된 항목, <code>&lt;optgroup&gt;</code>은 항목 묶음이에요.', '<label for="city">지역</label>\n<select id="city">\n  <option value="">선택하세요</option>\n  <optgroup label="수도권">\n    <option value="seoul" selected>서울</option>\n    <option value="incheon">인천</option>\n  </optgroup>\n  <option value="busan">부산</option>\n</select>'),
@@ -85,7 +85,7 @@ JSX = [
   fill('name만 꺼내는 구조 분해', 'const user = { name: "A", age: 3 };\nconst { ▢ } = user;', ['name', 'user', '"name"', 'name: user']),
   task('title과 page 속성을 가진 객체 book을 만들고 book.title을 출력하세요 (title은 코딩)', 'const book = { title: "코딩", page: 200 };\nconsole.log(book.title);', '', expect='코딩', need=[r'\{']),
  ]),
- dict(id='js10', t='폼과 이벤트 다루기', ic='input', d='input·select 값 읽기, change·submit 이벤트', lang='html', cards=[
+ dict(id='js10', t='폼과 이벤트 다루기', ic='input', d='input·select 값 읽기, change·submit 이벤트', pre='웹페이지 움직이기(DOM)', lang='html', cards=[
   card('입력값 읽기: value', 'input과 select의 현재 값은 <code>.value</code>로 읽어요. 값은 항상 <b>문자열</b>이라 숫자로 계산하려면 <code>Number()</code>로 바꿔요. 체크박스는 <code>.checked</code>(true/false)를 봐요.', '<input id="a" type="number" value="3">\n<input id="b" type="number" value="4">\n<button id="go">더하기</button>\n<p id="out"></p>\n<script>\n  document.querySelector("#go").addEventListener("click", () => {\n    const a = Number(document.querySelector("#a").value);\n    const b = Number(document.querySelector("#b").value);\n    document.querySelector("#out").textContent = a + b;\n  });\n</script>'),
   card('셀렉트박스 값 바꾸면: change', 'select·checkbox는 값이 바뀔 때 <code>change</code> 이벤트가, 글자 입력은 한 글자마다 <code>input</code> 이벤트가 일어나요. 고른 option의 글자는 <code>selectedOptions[0].text</code>, 전송값은 <code>value</code>예요.', '<select id="s">\n  <option value="red">빨강</option>\n  <option value="blue">파랑</option>\n  <option value="green">초록</option>\n</select>\n<p id="msg">색을 고르세요</p>\n<script>\n  const s = document.querySelector("#s");\n  s.addEventListener("change", () => {\n    const msg = document.querySelector("#msg");\n    msg.textContent = s.selectedOptions[0].text + " 선택 (" + s.value + ")";\n    msg.style.color = s.value;\n  });\n</script>'),
   card('select에 option 넣기', '데이터 배열로 option을 만들 땐 <code>new Option(글자, 값)</code>이나 <code>document.createElement("option")</code>을 쓰고 <code>append</code>로 붙여요.', '<select id="fruit"></select>\n<script>\n  const list = ["사과", "배", "포도"];\n  const sel = document.querySelector("#fruit");\n  list.forEach((name, i) => sel.append(new Option(name, i)));\n</script>'),
@@ -99,19 +99,24 @@ JSX = [
   fill('select에서 고른 값 읽기', 'const city = document.querySelector("#city").▢;', ['value', 'text', 'option', 'selected']),
   task('select#pick에 option A, B를 만들고, change 때 p#out에 고른 값을 쓰는 코드를 만드세요', '<select id="pick">\n  <option>A</option>\n  <option>B</option>\n</select>\n<p id="out"></p>\n<script>\n  const p = document.querySelector("#pick");\n  p.addEventListener("change", () => {\n    document.querySelector("#out").textContent = p.value;\n  });\n</script>', '', check='(()=>{const s=doc.querySelector("#pick");if(!s||s.options.length<2)return false;s.value=s.options[1].value;s.dispatchEvent(new Event("change"));return (doc.querySelector("#out")||{}).textContent===s.value})()', need=['change']),
  ]),
- dict(id='js11', t='JSON·저장·서버 통신', ic='fetch', d='JSON, localStorage, fetch와 async/await', cards=[
+ dict(id='js11', t='JSON과 저장', ic='JSON', d='JSON 변환, localStorage로 저장·불러오기', pre='객체(Object)', cards=[
   card('JSON: 데이터를 주고받는 글자 형식', '<b>JSON</b>은 객체·배열을 문자열로 표현하는 형식이에요. 서버와 앱이 데이터를 주고받을 때 거의 항상 써요. <code>JSON.stringify(객체)</code>로 문자열로, <code>JSON.parse(문자열)</code>로 다시 객체로 바꿔요. 키는 반드시 큰따옴표로 감싸요.', 'const user = { name: "민수", tags: ["코딩", "게임"] };\nconst text = JSON.stringify(user);\nconsole.log(text);\nconst back = JSON.parse(text);\nconsole.log(back.tags[0]);'),
   card('localStorage: 브라우저에 저장', '<code>localStorage.setItem(키, 문자열)</code>로 저장하면 페이지를 닫아도 남아요. 객체는 JSON으로 바꿔 저장해요. 이 학습 앱의 진도도 이런 방식으로 저장돼요. (여기 실행기는 실제 저장소 대신 실행할 때마다 비워지는 연습용 저장소를 써요.) 단, 같은 기기·브라우저에만 있고 <b>비밀번호 같은 민감 정보는 저장하면 안 돼요</b>.', 'const data = { level: 3, xp: 120 };\nlocalStorage.setItem("save", JSON.stringify(data));\nconst loaded = JSON.parse(localStorage.getItem("save"));\nconsole.log("레벨", loaded.level);'),
-  card('비동기: 기다리는 동안 멈추지 않기', '서버 응답처럼 시간이 걸리는 일은 <b>비동기</b>로 처리해요. <code>Promise</code>는 "나중에 결과를 주겠다는 약속"이고, <code>async</code> 함수 안에서 <code>await</code>로 결과를 기다려요. 기다리는 동안 화면은 멈추지 않아요.', 'function wait(ms) {\n  return new Promise(ok => setTimeout(ok, ms));\n}\nasync function run() {\n  console.log("시작");\n  await wait(500);\n  console.log("0.5초 뒤");\n}\nrun();\nconsole.log("run을 부른 다음 줄");'),
-  card('fetch로 서버에서 데이터 받기', '<code>fetch(주소)</code>로 서버에 요청하고, 응답을 <code>.json()</code>으로 객체로 바꿔요. 네트워크는 실패할 수 있으니 <code>try/catch</code>로 감싸고 <code>res.ok</code>를 확인해요. 앱이 서버의 <b>API</b>와 대화하는 기본 방법이에요.', '// 실제 서버 대신 가짜 응답으로 흐름만 보여 줘요\nasync function getWeather() {\n  try {\n    const res = { ok: true, json: async () => ({ city: "서울", temp: 21 }) };\n    // 실제로는: const res = await fetch("https://api.example.com/weather");\n    if (!res.ok) throw new Error("응답 실패");\n    const data = await res.json();\n    console.log(data.city, data.temp + "도");\n  } catch (err) {\n    console.log("에러:", err.message);\n  }\n}\ngetWeather();'),
  ], q=[
   mc('객체를 JSON 문자열로 바꾸는 함수는?', ['JSON.stringify', 'JSON.parse', 'String()', 'toJSON']),
   mc('JSON 문자열을 객체로 바꾸는 함수는?', ['JSON.parse', 'JSON.stringify', 'Object()', 'eval']),
   out('const t = JSON.stringify({ a: 1 });\nconsole.log(typeof t);', ['string', 'object', 'number', 'json']),
-  out('console.log("1");\nsetTimeout(() => console.log("2"), 0);\nconsole.log("3");', ['1\n3\n2', '1\n2\n3', '2\n1\n3', '3\n2\n1'], 'setTimeout은 0초여도 현재 코드가 끝난 뒤 실행돼요.'),
   mc('localStorage에 저장하면 안 되는 것은?', ['비밀번호', '화면 테마 설정', '학습 진도', '최근 본 단원']),
+ ]),
+ dict(id='js12', t='비동기와 서버 통신', ic='fetch', d='Promise, async/await, fetch로 API 부르기', pre='JSON과 저장', cards=[
+  card('비동기: 기다리는 동안 멈추지 않기', '서버 응답처럼 시간이 걸리는 일은 <b>비동기</b>로 처리해요. <code>Promise</code>는 "나중에 결과를 주겠다는 약속"이고, <code>async</code> 함수 안에서 <code>await</code>로 결과를 기다려요. 기다리는 동안 화면은 멈추지 않아요.', 'function wait(ms) {\n  return new Promise(ok => setTimeout(ok, ms));\n}\nasync function run() {\n  console.log("시작");\n  await wait(500);\n  console.log("0.5초 뒤");\n}\nrun();\nconsole.log("run을 부른 다음 줄");'),
+  card('fetch로 서버에서 데이터 받기', '<code>fetch(주소)</code>로 서버에 요청하고, 응답을 <code>.json()</code>으로 객체로 바꿔요. 네트워크는 실패할 수 있으니 <code>try/catch</code>로 감싸고 <code>res.ok</code>를 확인해요. 앱이 서버의 <b>API</b>와 대화하는 기본 방법이에요.', '// 실제 서버 대신 가짜 응답으로 흐름만 보여 줘요\nasync function getWeather() {\n  try {\n    const res = { ok: true, json: async () => ({ city: "서울", temp: 21 }) };\n    // 실제로는: const res = await fetch("https://api.example.com/weather");\n    if (!res.ok) throw new Error("응답 실패");\n    const data = await res.json();\n    console.log(data.city, data.temp + "도");\n  } catch (err) {\n    console.log("에러:", err.message);\n  }\n}\ngetWeather();'),
+ 
+ ], q=[
+  out('console.log("1");\nsetTimeout(() => console.log("2"), 0);\nconsole.log("3");', ['1\n3\n2', '1\n2\n3', '2\n1\n3', '3\n2\n1'], 'setTimeout은 0초여도 현재 코드가 끝난 뒤 실행돼요.'),
   fill('Promise 결과를 기다리세요', 'async function f() {\n  const data = ▢ getData();\n}', ['await', 'async', 'wait', 'then']),
   mc('fetch 요청이 실패할 때를 대비하는 방법은?', ['try/catch로 감싸고 res.ok 확인', '무조건 성공한다고 가정', 'alert만 띄운다', 'for문으로 감싼다']),
+ 
  ]),
 ]
 

@@ -259,7 +259,7 @@ $('#vLearn').addEventListener('click',e=>{const t=e.target;
 
 /* ---------- 단원 시트 ---------- */
 function openUSheet(id){const u=UM[id],c=u.c,n=uLearned(u),dn=uDue(u,now());
-  $('#usheetIn').innerHTML=`<div class="u-head" style="--gc:var(--g-${c.g});--gs:var(--g-${c.g}-s)"><span class="c-ic">${esc(u.ic)}</span><div><h2>${u.ui+1}. ${esc(u.t)}</h2><p>${esc(u.d)}</p></div></div><div class="meter"><span style="width:${n/u.q.length*100}%;background:var(--g-${c.g})"></span></div><p class="note">${n}/${u.q.length} 문제 익힘${dn?` · 복습할 문제 ${dn}개`:''}</p>
+  $('#usheetIn').innerHTML=`<div class="u-head" style="--gc:var(--g-${c.g});--gs:var(--g-${c.g}-s)"><span class="c-ic">${esc(u.ic)}</span><div><h2>${u.ui+1}. ${esc(u.t)}</h2><p>${esc(u.d)}</p>${u.pre?`<p class="pre">먼저 보면 좋아요 · ${esc(u.pre)}</p>`:''}</div></div><div class="meter"><span style="width:${n/u.q.length*100}%;background:var(--g-${c.g})"></span></div><p class="note">${n}/${u.q.length} 문제 익힘${dn?` · 복습할 문제 ${dn}개`:''}</p>
   <div class="u-acts"><button class="btn" data-ucards="${u.id}">개념 카드 보기 <span>${u.cards.length}장 · 예제 실행</span></button><button class="btn primary" data-ustart="${u.id}">${n?'연습 이어서 하기':'연습 시작'} <span>문제 ${S.set.len}개</span></button><button class="btn" id="uClose">닫기</button></div>`;
   $('#usheet').hidden=false;}
 function closeUSheet(now){const sh=$('#usheet');if(sh.hidden)return;if(now||RM){sh.hidden=true;return}sh.classList.add('closing');setTimeout(()=>{sh.classList.remove('closing');sh.hidden=true},210)}

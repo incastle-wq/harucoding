@@ -356,7 +356,7 @@ function runIntro(done){const el=$('#intro');if(S.set.intro===false){el.remove()
   const cmd='> print("하루코딩")';const tl=$('#termLine');let i=0,closed=false;
   const close=()=>{if(closed)return;closed=true;el.classList.add('out');setTimeout(()=>el.remove(),550);done()};el.addEventListener('click',close);
   if(RM){tl.textContent=cmd;$('#introM').innerHTML=mascot('cheer',96);setTimeout(close,900);return}
-  (function type(){tl.innerHTML=esc(cmd.slice(0,i))+'<span class="cur"></span>';if(i++<cmd.length)return setTimeout(type,i<3?160:55);
+  (function type(){if(closed)return;tl.innerHTML=esc(cmd.slice(0,i))+'<span class="cur"></span>';if(i++<cmd.length)return setTimeout(type,i<3?160:55);
     $('#introM').innerHTML=mascot('cheer',96);$('#introM').style.animationDelay='.1s';$('#introLogo').style.animationDelay='.35s';$('#introSub').style.animationDelay='.6s';setTimeout(close,2300)})();}
 const ONB={i:0,goal:50,c:'py'};
 function renderOnb(){const o=$('#onbIn');const dots=`<div class="onb-dots">${[0,1,2].map(k=>`<i class="${k===ONB.i?'on':''}"></i>`).join('')}</div>`;

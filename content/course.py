@@ -413,10 +413,17 @@ JS = [
  ]),
 ]
 
+exec(open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'deep_code.py'), encoding='utf-8').read())
+PY += PYX
+HT += HTX
+JS += JSX
+
 COURSES = [
  dict(id='py', name='Python', lang='python', g='py', d='입문자에게 가장 쉬운 언어. 데이터·자동화·AI까지', units=PY),
  dict(id='ht', name='HTML·CSS', lang='html', g='ht', d='웹페이지의 뼈대와 옷. 결과가 바로 눈에 보여요', units=HT),
  dict(id='js', name='JavaScript', lang='javascript', g='js', d='웹페이지를 움직이는 언어', units=JS),
+ dict(id='sc', name='보안', lang='javascript', g='sc', d='해킹은 어떻게 일어나고 어떻게 막을까. XSS·인젝션·비밀번호·개인정보', units=SEC),
+ dict(id='ap', name='앱개발', lang='javascript', g='ap', d='앱의 구조, API, 직접 만드는 작은 앱, Git과 출시까지', units=APP),
 ]
 
 here = os.path.dirname(os.path.abspath(__file__))

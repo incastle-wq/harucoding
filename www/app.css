@@ -1,17 +1,17 @@
 /* 하루코딩: 코드 블록 · 편집기 · 학습 경로 */
 :root{
   --ai:#4338CA;--ai-deep:#3730A3;--ai-soft:#E8E7FB;--on-ai:#FFFFFF;
-  --g-py:#2F6EA8;--g-py-s:#E1ECF7;--g-ht:#D9481F;--g-ht-s:#FCE6DE;--g-js:#A87F00;--g-js-s:#FFF4C7;
+  --g-py:#2F6EA8;--g-py-s:#E1ECF7;--g-ht:#D9481F;--g-ht-s:#FCE6DE;--g-js:#A87F00;--g-js-s:#FFF4C7;--g-sc:#0F766E;--g-sc-s:#DDF2EE;--g-ap:#7C3AED;--g-ap-s:#EDE5FD;
   --mono:ui-monospace,'SFMono-Regular','JetBrains Mono',Menlo,Consolas,'Roboto Mono','Droid Sans Mono',monospace;
   --code-bg:#0F172A;--code-fg:#E2E8F0;--code-line:#1E293B;--code-muted:#64748B;
   --tk-kw:#C084FC;--tk-str:#86EFAC;--tk-num:#FDBA74;--tk-com:#64748B;--tk-def:#7DD3FC;--tk-tag:#F472B6;--tk-attr:#FDE68A;--tk-op:#E2E8F0;
   --pat:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='22' height='22'%3E%3Ccircle cx='2' cy='2' r='1.4' fill='%23ffffff' fill-opacity='.16'/%3E%3C/svg%3E");
 }
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--ai:#A5A3F5;--ai-deep:#8B88EE;--ai-soft:#26244A;--on-ai:#11112A;
-  --g-py:#7FB0E0;--g-py-s:#1B2A3A;--g-ht:#F08A6A;--g-ht-s:#3A2019;--g-js:#F2D25A;--g-js-s:#3A3214;--code-bg:#0B1020;--code-line:#182033;
+  --g-py:#7FB0E0;--g-py-s:#1B2A3A;--g-ht:#F08A6A;--g-ht-s:#3A2019;--g-js:#F2D25A;--g-js-s:#3A3214;--g-sc:#5FD3B6;--g-sc-s:#12302B;--g-ap:#B89AF7;--g-ap-s:#2A1F3D;--code-bg:#0B1020;--code-line:#182033;
   --pat:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='22' height='22'%3E%3Ccircle cx='2' cy='2' r='1.4' fill='%2311112A' fill-opacity='.22'/%3E%3C/svg%3E")}}
 :root[data-theme="dark"]{--ai:#A5A3F5;--ai-deep:#8B88EE;--ai-soft:#26244A;--on-ai:#11112A;
-  --g-py:#7FB0E0;--g-py-s:#1B2A3A;--g-ht:#F08A6A;--g-ht-s:#3A2019;--g-js:#F2D25A;--g-js-s:#3A3214;--code-bg:#0B1020;--code-line:#182033;
+  --g-py:#7FB0E0;--g-py-s:#1B2A3A;--g-ht:#F08A6A;--g-ht-s:#3A2019;--g-js:#F2D25A;--g-js-s:#3A3214;--g-sc:#5FD3B6;--g-sc-s:#12302B;--g-ap:#B89AF7;--g-ap-s:#2A1F3D;--code-bg:#0B1020;--code-line:#182033;
   --pat:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='22' height='22'%3E%3Ccircle cx='2' cy='2' r='1.4' fill='%2311112A' fill-opacity='.22'/%3E%3C/svg%3E")}
 .hero{background-size:22px 22px,auto}
 .btn.primary{box-shadow:0 6px 18px rgba(67,56,202,.28)}

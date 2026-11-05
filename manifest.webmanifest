@@ -1,0 +1,2 @@
+{"name":"하루코딩","short_name":"하루코딩","description":"하루 10분, 혼자서 배우는 코딩 — Python · HTML·CSS · JavaScript","start_url":"./","scope":"./","display":"standalone","orientation":"portrait","background_color":"#0B1020","theme_color":"#4338CA","lang":"ko",
+"icons":[{"src":"icons/icon-192.png","sizes":"192x192","type":"image/png","purpose":"any"},{"src":"icons/icon-512.png","sizes":"512x512","type":"image/png","purpose":"any"},{"src":"icons/maskable-512.png","sizes":"512x512","type":"image/png","purpose":"maskable"}]}
